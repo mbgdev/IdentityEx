@@ -1,3 +1,6 @@
+using IdentityEx.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace IdentityEx
 {
     public class Program
@@ -8,6 +11,8 @@ namespace IdentityEx
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
+            builder.Services.AddIdentity<AppUser,AppRole>().AddEntityFrameworkStores<AppDbContext>();
 
             var app = builder.Build();
 
